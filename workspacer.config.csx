@@ -6,6 +6,7 @@
 #r "C:\Program Files\workspacer\plugins\workspacer.FocusIndicator\workspacer.FocusIndicator.dll"
 
 using System;
+using System.Diagnostics;
 using workspacer;
 using workspacer.Bar;
 using workspacer.Gap;
@@ -91,6 +92,21 @@ Action<IConfigContext> doConfig = (context) =>
         manager.Subscribe(modKey, Keys.I, () => context.ToggleConsoleWindow(), "toggle debug console");
         manager.Subscribe(modKey, Keys.Q, () => context.Quit());
         manager.Subscribe(modShift, Keys.Q, () => context.Restart());
+
+        // Launching apps:
+
+        // windowsTerminal
+        manager.Subscribe(modKey, Keys.T, () => Process.Start("wt.exe", ""));
+        // launching brave through cmd
+        var braveStartInfo = new ProcessStartInfo{
+            FileName = "cmd.exe",
+            Arguments = "/C start brave",
+            WindowStyle = ProcessWindowStyle.Hidden,
+            CreateNoWindow = true,
+            UseShellExecute = true
+        };
+        manager.Subscribe(modKey, Keys.B, () => Process.Start(braveStartInfo));
+        manager.Subscribe(modKey, Keys.E, () => Process.Start("explorer.exe", ""));
     };
     setKeyBindings();
 };
