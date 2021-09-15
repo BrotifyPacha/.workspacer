@@ -9,6 +9,7 @@ using System;
 using System.Diagnostics;
 using workspacer;
 using workspacer.Bar;
+using workspacer.Bar.Widgets;
 using workspacer.Gap;
 using workspacer.TitleBar;
 using workspacer.ActionMenu;
@@ -18,17 +19,29 @@ Action<IConfigContext> doConfig = (context) =>
 {
     context.CanMinimizeWindows = false;
 
-    var fontSize = 11;
+    var fontSize = 12;
     var fontFace = "JetBrainsMono NF";
-    var taskBarSize = fontSize * 2;
-    var defaultBgColor = new Color( 0x26, 0x26, 0x26);
+    var taskBarSize = (int) (fontSize * 2.1);
+    var defaultBgColor = new Color( 0x22, 0x25, 0x22);
     var gap = 10;
 
     context.AddBar( new BarPluginConfig(){
         FontSize = fontSize,
         FontName = fontFace,
         BarHeight = taskBarSize,
-        DefaultWidgetBackground = defaultBgColor
+        DefaultWidgetBackground = defaultBgColor,
+        LeftWidgets = () => new IBarWidget[] {
+            new TextWidget(" "),
+            new TitleWidget() {
+                MonitorHasFocusColor = new Color(0x02, 0xF0, 0xFF),
+            }
+        },
+        RightWidgets = () => new IBarWidget[] {
+            new TimeWidget(1000, "HH:mm:ss - dd.MM.yyyy"),
+            new TextWidget(" | "),
+            new ActiveLayoutWidget(),
+            new TextWidget(" ")
+        }
     });
 
     var gapPlugin = context.AddGap(
@@ -44,7 +57,7 @@ Action<IConfigContext> doConfig = (context) =>
 
     context.AddFocusIndicator(
         new FocusIndicatorPluginConfig() {
-            BorderColor = new Color( 0xF8,0x02, 0xFF),
+            BorderColor = new Color(0xF8, 0x02, 0xFF),
             BorderSize = 5,
             GapInset = 5
     });
