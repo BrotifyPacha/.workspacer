@@ -22,7 +22,7 @@ Action<IConfigContext> doConfig = (context) =>
     var fontFace = "JetBrainsMono NF";
     var taskBarSize = fontSize * 2;
     var defaultBgColor = new Color( 0x26, 0x26, 0x26);
-    var gap = 8;
+    var gap = 10;
 
     context.AddBar( new BarPluginConfig(){
         FontSize = fontSize,
@@ -44,8 +44,9 @@ Action<IConfigContext> doConfig = (context) =>
 
     context.AddFocusIndicator(
         new FocusIndicatorPluginConfig() {
-            BorderColor = new Color(0x02, 0xF8, 0xFF),
-            BorderSize = 4
+            BorderColor = new Color( 0xF8,0x02, 0xFF),
+            BorderSize = 5,
+            GapInset = 5
     });
     var actionMenu = context.AddActionMenu();
 
